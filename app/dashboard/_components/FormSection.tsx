@@ -6,13 +6,15 @@ import Image from 'next/image'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import { Loader2Icon } from 'lucide-react'
 
 interface FormSectionProps {
     selectedTemplate?: ToolSchema,
-    userFormInput: (formData: FormData) => void
+    userFormInput: (formData: FormData) => void,
+    loading: boolean
 }
 
-const FormSection: React.FC<FormSectionProps> = ({ selectedTemplate, userFormInput }) => {
+const FormSection: React.FC<FormSectionProps> = ({ selectedTemplate, userFormInput, loading }) => {
 
     const [formData, setFormData] = useState<FormData>(new FormData())
 
@@ -44,7 +46,10 @@ const FormSection: React.FC<FormSectionProps> = ({ selectedTemplate, userFormInp
                         null}
                     </div>
                 ))}
-                <Button type='submit' className='w-full py-5 bg-primary text-primary-foreground'>Generate Content</Button>
+                <Button type='submit' className='w-full py-5 bg-primary text-primary-foreground' disabled={loading}>
+                    {loading && <Loader2Icon className='animate-spin' />}
+                    Generate Content
+                </Button>
             </form>
         </div>
     )
