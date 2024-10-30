@@ -5,7 +5,7 @@ import SideNav from "./_components/SideNav"
 
 const DashboardLayout: React.FC<React.PropsWithChildren> = ({children}) => {
 	return (
-		<div>
+		<div className="bg-slate-100 h-screen">
 			<div className="fixed w-[15rem] hidden md:block">
 				<SideNav />
 			</div>

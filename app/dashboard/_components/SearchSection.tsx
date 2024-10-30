@@ -2,7 +2,6 @@
 
 import { Search } from 'lucide-react'
 import React from 'react'
-import { ChangeEvent } from 'react'
 
 type SearchSectionProps = {
     onSearchInput: React.Dispatch<React.SetStateAction<string>>;
@@ -17,7 +16,7 @@ const SearchSection: React.FC<SearchSectionProps> = ({ onSearchInput }) => {
             <div className='w-full'>
                 <div className='flex gap-2 items-center p-2 border rounded-sm bg-white mt-5 mb-3 w-[30%] mx-auto'>
                     <Search className='text-primary' />
-                    <input type="search" placeholder='search' className='bg-transparent outline-none w-full' onChange={(event: ChangeEvent<HTMLInputElement>) => onSearchInput(event.target.value)}/>
+                    <input type="search" placeholder='search' className='bg-transparent outline-none w-full' onChange={(event: React.ChangeEvent<HTMLInputElement>) => onSearchInput(event.target.value)}/>
                 </div>
             </div>
         </div>

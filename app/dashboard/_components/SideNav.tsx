@@ -41,7 +41,7 @@ const SideNav:React.FC = () => {
     ]
 
     return (
-        <div className='h-screen p-5 shadow-sm'>
+        <div className='h-screen p-5 shadow-sm bg-white'>
             <div className="flex justify-center">
                 <Image src={'/logo.svg'} width={120} height={100} alt='logo' className='w-auto h-auto' />
             </div>
