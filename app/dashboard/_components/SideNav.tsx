@@ -47,7 +47,7 @@ function SideNav() {
             </div>
 
             <div className='mt-10'>
-                {menuList.map((item, idx) => (
+                {menuList.map((item: MenuItem, idx: number) => (
                     <div key={idx} className={`flex gap-2 mb-2 p-3 rounded-sm hover:bg-primary hover:text-primary-foreground ${path == item.path && 'bg-primary text-primary-foreground'}`}>
                         {item.icon}
                         <h3>{item.name}</h3>
