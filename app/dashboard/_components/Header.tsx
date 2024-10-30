@@ -3,7 +3,7 @@ import React from 'react'
 
 function Header() {
     return (
-        <div className='py-2 flex justify-between'>
+        <div className='p-2 flex justify-between'>
             <div className='flex gap-2 p-2 items-center border rounded-sm max-w-md'>
                 <Search />
                 <input type="search" placeholder='Search...' className='outline-none w-full px-1 rounded-sm' />

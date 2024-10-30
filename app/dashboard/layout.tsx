@@ -1,8 +1,9 @@
+import React from "react"
 import Header from "./_components/Header"
 import SideNav from "./_components/SideNav"
 
 
-function DashboardLayout({children}: Readonly<{children: React.ReactNode}>) {
+const DashboardLayout: React.FC<React.PropsWithChildren> = ({children}) => {
 	return (
 		<div>
 			<div className="fixed w-[15rem] hidden md:block">
