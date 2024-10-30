@@ -13,7 +13,7 @@ interface MenuItem {
     path: string
 }
 
-function SideNav() {
+const SideNav:React.FC = () => {
 
     const path = usePathname()
 
@@ -43,7 +43,7 @@ function SideNav() {
     return (
         <div className='h-screen p-5 shadow-sm'>
             <div className="flex justify-center">
-                <Image src={'./logo.svg'} width={120} height={100} alt='logo' className='w-auto h-auto' />
+                <Image src={'/logo.svg'} width={120} height={100} alt='logo' className='w-auto h-auto' />
             </div>
 
             <div className='mt-10'>

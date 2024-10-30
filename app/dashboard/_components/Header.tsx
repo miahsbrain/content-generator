@@ -1,7 +1,7 @@
 import { Search } from 'lucide-react'
 import React from 'react'
 
-function Header() {
+const Header: React.FC = () => {
     return (
         <div className='p-2 flex justify-between'>
             <div className='flex gap-2 p-2 items-center border rounded-sm max-w-md'>
