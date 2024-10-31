@@ -10,7 +10,7 @@ type SearchSectionProps = {
 const SearchSection: React.FC<SearchSectionProps> = ({ onSearchInput }) => {
 
     return (
-        <div className='p-10 bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 rounded-sm flex flex-col justify-center items-center'>
+        <div className='p-10 bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 rounded-sm flex flex-col justify-center items-center'>
             <h2 className='text-2xl font-semibold text-white'>Browse All Templates</h2>
             <p>What would you like to create today?</p>
             <div className='w-full'>

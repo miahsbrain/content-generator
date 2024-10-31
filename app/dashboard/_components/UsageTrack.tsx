@@ -1,6 +1,5 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import { db } from '@/utils/Db'
 import { aiOutputModel } from '@/utils/Schema'
 import { eq } from 'drizzle-orm'
@@ -14,6 +13,7 @@ interface UsageTrackProps {
 
 const UsageTrack: React.FC<UsageTrackProps> = ({ email }) => {
     const {totalUsage, setTotalUsage} = useTotalUsage()
+    const maxCredits = 10000
 
     // useEffect to fetch data from database
     useEffect(() => {
@@ -41,16 +41,25 @@ const UsageTrack: React.FC<UsageTrackProps> = ({ email }) => {
     }, [email, setTotalUsage]);
 
   return (
-    <div className='m-5'>
-        <div className='bg-primary text-primary-foreground rounded-sm p-3 w-full'>
-            <h3 className='font-semibold'>Credits</h3>
-            <div className='h-2 w-full bg-primary-foreground/30 rounded-full mt-2'>
-                <div className='h-2 bg-primary-foreground rounded-full' style={{width: `${(Number(totalUsage)/10000)*100}%`}}></div>
+        <div className="space-y-4">
+            <div className="space-y-2">
+                <div className="text-sm">Credits</div>
+                <div className="h-2 bg-primary/30 rounded-full overflow-hidden">
+                    <div 
+                    className="h-full bg-primary transition-all duration-300 ease-in-out" 
+                    style={{ 
+                        width: `${(totalUsage / maxCredits) * 100}%` 
+                    }}
+                    />
+                </div>
+                <div className="text-xs text-gray-500">
+                    {totalUsage.toLocaleString()} / {maxCredits.toLocaleString()} Credits Used
+                </div>
             </div>
-            <h3 className='text-xs mt-2'>{totalUsage} / 10,000 Credits Used</h3>
-        <Button className='w-full bg-white/70 hover:bg-white text-primary mt-2'>Upgrade</Button>
+            <button className="w-full py-2 px-4 bg-primary/90 text-primary-foreground rounded-md hover:bg-primary transition-colors duration-200">
+              Upgrade
+            </button>
         </div>
-    </div>
   )
 }
 

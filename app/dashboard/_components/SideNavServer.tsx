@@ -1,24 +1,27 @@
 import React from 'react'
-import UsageTrackServer from './UsageTrackServer'
+import { currentUser } from '@clerk/nextjs/server'
+import UsageTrack from './UsageTrack'
 import SideNav from './SideNav'
-import Image from 'next/image'
+import Overlay from './Overlay'
 
-const SideNavServer:React.FC = () => {
+
+const SideNavServer:React.FC = async () => {
+
+    // Fetch the current user from Clerk (server-side only)
+    const user = await currentUser();
+	if (!user || !user.primaryEmailAddress || !user.primaryEmailAddress.emailAddress ) {
+		throw new Error('User not defined at UsageTrackServer')
+	}
 
     return (
-        <div className='h-screen p-5 shadow-sm bg-white'>
-            <div className="flex justify-center">
-                <Image src={'/logo.svg'} width={120} height={100} alt='logo' className='w-auto h-auto' />
-            </div>
-        
-            <div className='mt-10'>
-                <SideNav />
-                <div className='absolute bottom-2 left-0 w-full'>
-                    <UsageTrackServer />
-                </div>
-            </div>
-
-        </div>
+        <>
+            {/* Overlay */}
+            <Overlay />
+            {/* Sidebar */}
+            <SideNav>
+                <UsageTrack email={ user?.primaryEmailAddress?.emailAddress } />
+            </SideNav>
+        </>
     )
 }
 

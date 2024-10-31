@@ -9,7 +9,7 @@ const Dashboard: React.FC = () => {
 	const [userSearchInput, setUserSearchInput] = useState<string>('')
 
 	return (
-		<div className="p-2">
+		<div className="p-2 space-y-6">
 			{/* Search section */}
 			<div>
 				<SearchSection onSearchInput={setUserSearchInput} />

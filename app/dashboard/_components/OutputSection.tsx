@@ -23,7 +23,7 @@ const OutputSection: React.FC<OutputSectionProps> = ({ aiOutput }) => {
         <div className='bg-white shadow-sm border rounded-sm'>
             <div className='flex justify-between items-center p-5'>
                 <h3 className='text-xl font-semibold'>Your result</h3>
-                <Button><Copy /> Copy</Button>
+                <Button onClick={() => navigator.clipboard.writeText(editorRef.current?.getInstance().getMarkdown())}><Copy /> Copy</Button>
             </div>
             <Editor
                 ref={editorRef as React.LegacyRef<Editor>}

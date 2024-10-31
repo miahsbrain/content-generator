@@ -29,7 +29,7 @@ const FormSection: React.FC<FormSectionProps> = ({ selectedTemplate, userFormInp
     }
 
     return (
-        <div className='p-5 shadow-sm border rounded-sm bg-white'>
+        <div className='w-full p-5 shadow-sm border rounded-sm bg-white'>
             <div>
                 <Image src={selectedTemplate?.icon ? selectedTemplate?.icon : ''} alt={selectedTemplate?.name ? selectedTemplate?.name : ''} height={70} width={70} />
                 <h2 className='font-semibold text-2xl mb-2 text-primary'>{selectedTemplate?.name}</h2>

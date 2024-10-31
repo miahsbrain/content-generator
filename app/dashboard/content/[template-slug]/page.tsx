@@ -13,6 +13,7 @@ import { aiOutputModel } from '@/utils/Schema'
 import { useUser } from '@clerk/nextjs'
 import moment from 'moment'
 import { useTotalUsage } from '@/app/(context)/TotalUsageContext'
+import { useRouter } from 'next/navigation'
 
 interface CreateContentProps {
     params: {
@@ -27,14 +28,12 @@ const CreateContent: React.FC<CreateContentProps> = ({ params }) => {
     const [aiOutput, setAiOutput] = useState<string>('')
     const { user } = useUser()
     const { totalUsage } = useTotalUsage()
+    const router = useRouter()
 
     const generateAIContent = async (formData: FormData) => {
-        if (totalUsage > 10000) {
-            return (
-                <div>
-                    Alert
-                </div>
-            )
+        if (totalUsage >= 1000) {
+            router.push('/dashboard/billing')
+            return
         }
         setLoading(true)
         // Get the prompt from template
@@ -71,13 +70,13 @@ const CreateContent: React.FC<CreateContentProps> = ({ params }) => {
     }
     
     return (
-        <div className='p-5'>
+        <div className=''>
             <Link href={'/dashboard'}>
                 <Button><ArrowLeft /> Back</Button>
             </Link>
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-10 py-5'>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-y-10 md:gap-5 py-5'>
                 {/* Form section */}
-                <div>
+                <div className='w-full'>
                     <FormSection selectedTemplate={selectedTemplate} userFormInput={generateAIContent} loading={loading} />
                 </div>
 

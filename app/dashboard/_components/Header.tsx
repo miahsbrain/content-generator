@@ -1,17 +1,46 @@
-import { Search } from 'lucide-react'
-import React from 'react'
+'use client'
+
+import { useLayoutContext } from '@/app/(context)/LayoutContext'
+import { Search, Menu, ArrowLeft, X } from 'lucide-react'
+import React, { useState } from 'react'
+import { Button } from '@/components/ui/button'
 
 const Header: React.FC = () => {
+
+    const [showBackButton] = useState<boolean>(false)
+    const { showMobileSearch, toggleSidebar, toggleMobileSearch } = useLayoutContext()
+
     return (
-        <div className='p-2 flex justify-between bg-white'>
-            <div className='flex gap-2 p-2 items-center border rounded-sm max-w-md'>
-                <Search />
-                <input type="search" placeholder='Search...' className='outline-none w-full px-1 rounded-sm' />
+        <header className='sticky top-0 z-10 flex h-16 items-center justify-between border-b bg-white px-4 lg:px-6 w-full'>
+            <div className='flex items-center gap-4 flex-1'>
+                <Button onClick={toggleSidebar} className="lg:hidden p-2 rounded-md">
+                    <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle sidebar</span>
+                </Button>
+                {showBackButton && (
+                <Button><ArrowLeft /> Back</Button>
+                )}
+                <div className={`transition-all duration-300 ease-in-out ${showMobileSearch ? 'w-full' : 'w-0'} overflow-hidden lg:w-auto lg:flex lg:gap-4`}>
+                    <input 
+                        placeholder="Search..." 
+                        className="w-full lg:w-[300px] px-3 py-2 border rounded-md"
+                    />
+                </div>
             </div>
-            <div>
-                <h2 className='bg-primary text-primary-foreground p-2 px-4 rounded-full text-xs'>Join Membership for just $5.99/month</h2>
+            <div className="flex items-center">
+                <button onClick={toggleMobileSearch} className="lg:hidden p-2 rounded-md hover:bg-gray-200">
+                {showMobileSearch ? (
+                    <X className="h-6 w-6" />
+                ) : (
+                    <Search className="h-6 w-6" />
+                )}
+                <span className="sr-only">
+                    {showMobileSearch ? 'Close search' : 'Open search'}
+                </span>
+                </button>
             </div>
-        </div>
+
+        </header>
     )
 }
 
