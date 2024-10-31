@@ -1,7 +1,6 @@
 'use client'
 
 import { FileClock, Home, Settings, Wallet } from 'lucide-react'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
@@ -41,20 +40,16 @@ const SideNav:React.FC = () => {
     ]
 
     return (
-        <div className='h-screen p-5 shadow-sm bg-white'>
-            <div className="flex justify-center">
-                <Image src={'/logo.svg'} width={120} height={100} alt='logo' className='w-auto h-auto' />
-            </div>
 
-            <div className='mt-10'>
-                {menuList.map((item: MenuItem, idx: number) => (
-                    <div key={idx} className={`flex gap-2 mb-2 p-3 rounded-sm hover:bg-primary hover:text-primary-foreground ${path == item.path && 'bg-primary text-primary-foreground'}`}>
-                        {item.icon}
-                        <h3>{item.name}</h3>
-                    </div>
-                ))}
-            </div>
+        <div className='mt-10'>
+            {menuList.map((item: MenuItem, idx: number) => (
+                <div key={idx} className={`flex gap-2 mb-2 p-3 rounded-sm hover:bg-primary hover:text-primary-foreground ${path == item.path && 'bg-primary text-primary-foreground'}`}>
+                    {item.icon}
+                    <h3>{item.name}</h3>
+                </div>
+            ))}
         </div>
+
     )
 }
 

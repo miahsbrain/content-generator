@@ -8,6 +8,11 @@ import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { chatSession } from '@/utils/AIModel'
 import { useState } from 'react'
+import { db } from '@/utils/Db'
+import { aiOutputModel } from '@/utils/Schema'
+import { useUser } from '@clerk/nextjs'
+import moment from 'moment'
+import { useTotalUsage } from '@/app/(context)/TotalUsageContext'
 
 interface CreateContentProps {
     params: {
@@ -20,8 +25,17 @@ const CreateContent: React.FC<CreateContentProps> = ({ params }) => {
     const selectedTemplate: ToolSchema | undefined  = Templates.find(item => item.slug === params['template-slug'])
     const [loading, setLoading] = useState<boolean>(false)
     const [aiOutput, setAiOutput] = useState<string>('')
+    const { user } = useUser()
+    const { totalUsage } = useTotalUsage()
 
     const generateAIContent = async (formData: FormData) => {
+        if (totalUsage > 10000) {
+            return (
+                <div>
+                    Alert
+                </div>
+            )
+        }
         setLoading(true)
         // Get the prompt from template
         const selectedPrompt = selectedTemplate?.aiPrompt
@@ -30,8 +44,30 @@ const CreateContent: React.FC<CreateContentProps> = ({ params }) => {
         // Call chat session to return prompt from gemini
         const result = await chatSession.sendMessage(finalAIPrompt)
         // Save the output to aiOutput
-        setAiOutput(result.response.text())
+        setAiOutput(result?.response.text())
+        // Get the slug
+        const slug = selectedTemplate?.slug
+        // Verify slug exists
+        if (!slug) {
+            throw new Error('Slug for selected template is not defined')
+        }
+        await SaveInDb(JSON.stringify(formData), selectedTemplate?.slug, result?.response.text())
         setLoading(false)
+    }
+
+    const SaveInDb = async (formData: string, slug: string, aiResponse: string) => {
+        if (!formData || !slug || !aiResponse || !user?.primaryEmailAddress?.emailAddress) {
+            throw new Error('Missing required fields {formData, slug, aiResponse, or email }')
+        }
+        const result = await db.insert(aiOutputModel).values({
+            formData:formData,
+            templateSlug: slug,
+            aiResponse: aiResponse,
+            createdBy: user?.primaryEmailAddress?.emailAddress,
+            createdAt: moment().format('DD/MM/YYYY')
+        })
+
+        console.log(result)
     }
     
     return (

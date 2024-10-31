@@ -32,7 +32,7 @@ const OutputSection: React.FC<OutputSectionProps> = ({ aiOutput }) => {
                 height="500px"
                 initialEditType="wysiwyg"
                 useCommandShortcut={true}
-                onChange={() => console.log(editorRef.current?.getInstance().getMarkdown())}
+                // onChange={() => console.log(editorRef.current?.getInstance().getMarkdown())}
             />
         </div>
     )
