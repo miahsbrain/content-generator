@@ -3,6 +3,7 @@
 import React, { createContext, useEffect, useContext, useState } from 'react';
 import { getCurrentSubscription } from '@/utils/Db';
 import moment from 'moment';
+import { useUserContext } from './UserContext';
 
 interface SubscriptionContextType {
     currentPlan: 'free' | 'plus',
@@ -10,7 +11,7 @@ interface SubscriptionContextType {
     isLoading: boolean,
     error: Error | null,
     setSubscription: (plan: 'free' | 'plus', expiryDate: string | null) => void,
-    refreshSubscription: () => Promise<void>
+    refreshSubscription: (email: string) => Promise<void>
 }
 
 interface subscriptionStateProps {
@@ -25,6 +26,8 @@ const SubscriptionContext = createContext<SubscriptionContextType | undefined>(u
 
 export const SubscriptionContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
 
+    const { userEmail } = useUserContext()
+
     // Subscription state
     const [subscriptionState, setSubscriptionState] = useState<subscriptionStateProps>({
         currentPlan: 'free',
@@ -34,10 +37,10 @@ export const SubscriptionContextProvider: React.FC<React.PropsWithChildren> = ({
     })
 
     // Set default subscription from database
-    const fetchSubscription = async () => {
+    
+    const fetchSubscription = async (email: string) => {
         try {
             setSubscriptionState(prev => ({...prev, isLoading:true, error: null}))
-            const email = 'dummy@email.com'
             const subscription = await getCurrentSubscription(email)
 
             if (subscription) {
@@ -65,11 +68,10 @@ export const SubscriptionContextProvider: React.FC<React.PropsWithChildren> = ({
             }));
         }
     }
-
     // Set subscription state on mount
     useEffect(() => {
-        fetchSubscription();
-    }, [])
+        fetchSubscription(userEmail || '');
+    }, [userEmail])
 
     // Set the current subscription if upgrade
     const setSubscription = async ( plan: 'free' | string, expiryDate: string | null ) => {

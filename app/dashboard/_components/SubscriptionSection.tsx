@@ -6,7 +6,9 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { PricingCard } from './PricingCard';
 import { PayPalSubscribeButton } from './PayPalSubscribeButton';
 import { useSubscription } from '@/app/(context)/SubscriptionContext';
+// import { useUserContext } from '@/app/(context)/UserContext';
 import { isAfter } from 'date-fns';
+// import { createSubscription } from '@/utils/Db';
 
 const freeTierFeatures = [
 	{ text: 'Up to 3 projects' },
@@ -28,13 +30,13 @@ const plusTierFeatures = [
 ];
 
 const paypalOptions = {
-  clientId: "",
+  clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!,
   currency: 'USD',
 };
 
 
 export function SubscriptionSection() {
-	const { currentPlan, expiryDate, isLoading, error, refreshSubscription } = useSubscription();
+	const { currentPlan, expiryDate, isLoading, error } = useSubscription();
 	const [showPayPal, setShowPayPal] = useState(false);
 	const [paymentError, setPaymentError] = useState<string | null>(null);
 
@@ -50,7 +52,6 @@ export function SubscriptionSection() {
 
 	const handlePaymentSuccess = async () => {
 		setShowPayPal(false);
-		await refreshSubscription();
 	};
 
 	const handlePaymentError = (error: Error | string) => {
