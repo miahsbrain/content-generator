@@ -1,9 +1,10 @@
 import React from 'react'
+import { SubscriptionSection } from '../_components/SubscriptionSection'
 
 const Billing: React.FC = () => {
   return (
     <div>
-        Billing
+        <SubscriptionSection />
     </div>
   )
 }

@@ -3,7 +3,7 @@
 import { useLayoutContext } from '@/app/(context)/LayoutContext'
 import React from 'react'
 
-const Overlay = () => {
+const Overlay: React.FC = () => {
     const { showSidebar, setShowSidebar } = useLayoutContext()
     
   return (
@@ -12,7 +12,9 @@ const Overlay = () => {
             showSidebar ? 'opacity-50 z-40' : 'opacity-0 -z-10'
             } lg:hidden`}
             onClick={() => setShowSidebar(false)}
-        ></div>
+        >
+			
+		</div>
   )
 }
 
