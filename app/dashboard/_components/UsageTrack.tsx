@@ -3,15 +3,17 @@
 import { db } from '@/utils/Db'
 import { aiOutputModel } from '@/utils/Schema'
 import { eq } from 'drizzle-orm'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { aiOutputModelProps } from '@/utils/Schema'
 import { useTotalUsage } from '@/app/(context)/TotalUsageContext'
 import { useRouter } from 'next/navigation'
 import { useUserContext } from '@/app/(context)/UserContext'
+import { useSubscription } from '@/app/(context)/SubscriptionContext'
 
 const UsageTrack: React.FC = () => {
     const {totalUsage, setTotalUsage} = useTotalUsage()
-    const maxCredits = 10000
+    const { currentPlan } = useSubscription()
+    const [maxCredits, setMaxCredits] = useState<number>(10000)
     const router = useRouter()
     const { userEmail } = useUserContext()
 
@@ -35,10 +37,11 @@ const UsageTrack: React.FC = () => {
         const getTotalUsage = (data: aiOutputModelProps[]) => {
             const total = data.reduce((acc, element) => acc + (element.aiResponse?.length || 0), 0);
             setTotalUsage(total)
+            setMaxCredits(currentPlan == 'free' ? 10000 : 100000)
         };
 
     fetchData();
-    }, [userEmail, setTotalUsage]);
+    }, [userEmail, setTotalUsage, currentPlan, setMaxCredits]);
 
   return (
         <div className="space-y-4">

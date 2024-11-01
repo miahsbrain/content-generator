@@ -31,7 +31,7 @@ const CreateContent: React.FC<CreateContentProps> = ({ params }) => {
     const router = useRouter()
 
     const generateAIContent = async (formData: FormData) => {
-        if (totalUsage >= 1000) {
+        if (totalUsage >= 10000) {
             router.push('/dashboard/billing')
             return
         }
