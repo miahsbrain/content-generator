@@ -1,11 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Menu, X } from "lucide-react"
 import Link from "next/link"
 import Image from 'next/image'
 
-export default function HomeHeader({ scrollPosition }: { scrollPosition: number }) {
+interface HomeHeaderProps {
+	scrollPosition: number
+}
+
+const HomeHeader: React.FC<HomeHeaderProps> = ({ scrollPosition }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
 	return (
@@ -52,3 +56,5 @@ export default function HomeHeader({ scrollPosition }: { scrollPosition: number 
 		</header>
 	)
 }
+
+export default HomeHeader

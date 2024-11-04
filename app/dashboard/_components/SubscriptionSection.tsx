@@ -6,9 +6,7 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { PricingCard } from './PricingCard';
 import { PayPalSubscribeButton } from './PayPalSubscribeButton';
 import { useSubscription } from '@/app/(context)/SubscriptionContext';
-// import { useUserContext } from '@/app/(context)/UserContext';
-import { isAfter } from 'date-fns';
-// import { createSubscription } from '@/utils/Db';
+import { isAfter, parse } from 'date-fns';
 
 const freeTierFeatures = [
 	{ text: 'Up to 3 projects' },
@@ -42,7 +40,7 @@ export function SubscriptionSection() {
 
 	const isSubscriptionExpired = useMemo(() => {
 		if (!expiryDate) return true;
-		return isAfter(new Date(), new Date(expiryDate));
+		return isAfter(new Date(), parse(expiryDate || '', 'dd/MM/yyyy', new Date()));
 	}, [expiryDate]);
 
 	const handleUpgradeClick = () => {
