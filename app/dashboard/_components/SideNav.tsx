@@ -48,7 +48,9 @@ const SideNav:React.FC<React.PropsWithChildren> = ({ children }) => {
         <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${showSidebar ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:inset-auto lg:z-auto`}>
             <div className="flex h-16 items-center justify-between px-4 border-b">
                 <div className="flex items-center">
-                    <Image src={'/logo.svg'} width={120} height={100} alt='logo' className='w-auto h-auto' />
+                    <Link href={'/dashboard'}>
+                        <Image src={'/logo.svg'} width={120} height={100} alt='logo' className='w-auto h-auto' />
+                    </Link>
                 </div>
                 <button 
                     onClick={() => setShowSidebar(false)}
