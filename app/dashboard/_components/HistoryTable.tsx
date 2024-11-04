@@ -1,38 +1,34 @@
-import React from 'react';
+'use client'
+
+import React, { useEffect, useState } from 'react';
 import { Clock } from 'lucide-react';
 import { aiOutputModelProps } from '@/utils/Schema';
-// import { getHistory } from '@/utils/Db';
-// import { useUserContext } from '@/app/(context)/UserContext'
+import { useUserContext } from '@/app/(context)/UserContext';
+import { getHistory } from '@/utils/Db';
 
-export function HistoryTable() {
+export const HistoryTable: React.FC = () => {
 
-	// const { userEmail } = useUserContext()
+	const [historyData, setHistoryData] = useState<aiOutputModelProps[]>([])
+	const { userEmail } = useUserContext()
 
-  const historyData: aiOutputModelProps[] = [
-    {
-      id: 1,
-      formData: "Initial website setup",
-      aiResponse: "Created basic layout and components",
-      templateSlug: "website-template",
-      createdBy: "john.doe",
-      createdAt: "2024-03-10T14:30:00Z"
-    },
-    {
-      id: 2,
-      formData: "Add authentication flow",
-      aiResponse: null,
-      templateSlug: "auth-flow",
-      createdBy: "jane.smith",
-      createdAt: "2024-03-09T09:15:00Z"
-    }
-  ];
+	useEffect(() => {
+		const fetchData = async () => {
+			const data = await getHistory(userEmail || '')
+			// set data to historyData
+			if (data) {
+				setHistoryData(data)
+			}
+		}
+
+		fetchData();
+	}, [userEmail])
+
 
   return (
     <div className="w-full">
       	{/* Mobile view */}
-		{/* {userEmail} */}
 		<div className="block sm:hidden">
-			{historyData.map((entry) => (
+			{historyData ? historyData.map((entry) => (
 			<div key={entry.id} className="bg-white mb-4 rounded-lg shadow-sm border border-gray-200">
 				<div className="p-4 space-y-2">
 				<div className="flex justify-between items-start">
@@ -58,7 +54,11 @@ export function HistoryTable() {
 				</div>
 				</div>
 			</div>
-			))}
+			)) : 
+			<div>
+				No history yet
+			</div>
+			}
 		</div>
 
 		{/* Desktop view */}
@@ -75,7 +75,7 @@ export function HistoryTable() {
 				</tr>
 			</thead>
 			<tbody className="bg-white divide-y divide-gray-200">
-				{historyData.map((entry) => (
+				{historyData ? historyData.map((entry) => (
 				<tr key={entry.id} className="hover:bg-gray-50 transition-colors">
 					<td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900">#{entry.id}</td>
 					<td className="px-4 py-3 text-sm text-gray-600 max-w-[200px] truncate">{entry.formData}</td>
@@ -95,7 +95,11 @@ export function HistoryTable() {
 					</div>
 					</td>
 				</tr>
-				))}
+				)) : 
+				<div>
+					No history yet
+				</div>
+				}
 			</tbody>
 			</table>
 		</div>

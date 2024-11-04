@@ -14,7 +14,7 @@ export default function HomeHero() {
 						<p className="text-xl sm:text-2xl mb-10 text-gray-600 dark:text-gray-300">
 							Explore our curated list of cutting-edge AI tools to enhance your productivity and creativity.
 						</p>
-						<Link href="/sign-up" className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-full text-white bg-orange-600 hover:bg-orange-700 transition-colors duration-300 ease-in-out">
+						<Link href="/dashboard" className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-full text-white bg-orange-600 hover:bg-orange-700 transition-colors duration-300 ease-in-out">
 							Get Started
 							<ArrowRight className="ml-2 -mr-1 h-5 w-5" />
 						</Link>
