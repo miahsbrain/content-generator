@@ -16,14 +16,14 @@ const OutputSection: React.FC<OutputSectionProps> = ({ aiOutput }) => {
         // Get editor instance
         const editorInstance = editorRef.current?.getInstance()
         // Set editor instance markdown
-        editorInstance.setMarkdown(aiOutput)
+        editorInstance?.setMarkdown(aiOutput)
     }, [aiOutput])
 
     return (
         <div className='bg-white shadow-sm border rounded-sm'>
             <div className='flex justify-between items-center p-5'>
                 <h3 className='text-xl font-semibold'>Your result</h3>
-                <Button onClick={() => navigator.clipboard.writeText(editorRef.current?.getInstance().getMarkdown())}><Copy /> Copy</Button>
+                <Button onClick={() => navigator.clipboard.writeText(editorRef.current?.getInstance().getMarkdown() || "")}><Copy /> Copy</Button>
             </div>
             <Editor
                 ref={editorRef as React.LegacyRef<Editor>}

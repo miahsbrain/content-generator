@@ -1,6 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
-import { subscriptionModel } from './Schema';
+import { aiOutputModel, subscriptionModel } from './Schema';
 import moment from 'moment';
 import { eq } from 'drizzle-orm';
 
@@ -49,6 +49,20 @@ export async function updateSubscriptionStatus( email: string, endDate: string) 
 
     } catch (error) {
         console.error('Error updating subscription status:', error);
+        throw error;
+    }
+}
+
+// Get the histories user subscription
+export async function getHistory(email: string) {
+    try {
+        const subscriptions = await db.select().from(aiOutputModel)
+        .where(eq(aiOutputModel.createdBy, email))
+        .orderBy(aiOutputModel.createdAt);
+        return subscriptions || null;
+
+    } catch (error) {
+        console.error('Error fetching subscription:', error);
         throw error;
     }
 }
