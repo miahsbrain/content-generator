@@ -1,8 +1,9 @@
+import React from 'react'
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
-export default function HomeHero() {
+const HomeHero: React.FC = () => {
 	return (
 		<section className="relative overflow-hidden bg-gray-50 dark:bg-gray-800">
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
@@ -27,3 +28,5 @@ export default function HomeHero() {
 		</section>
 	)
 }
+
+export default HomeHero

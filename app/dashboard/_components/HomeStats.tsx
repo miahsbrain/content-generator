@@ -1,6 +1,7 @@
+import React from "react"
 import { Users, Wrench, Star } from "lucide-react"
 
-export default function HomeStats() {
+const HomeStats: React.FC = () => {
 	const stats = [
 		{ icon: Users, value: '100,000+', label: 'Active Users' },
 		{ icon: Wrench, value: '500+', label: 'AI Tools' },
@@ -29,3 +30,5 @@ export default function HomeStats() {
 		</section>
 	)
 }
+
+export default HomeStats

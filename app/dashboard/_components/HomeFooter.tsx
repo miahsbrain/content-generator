@@ -1,7 +1,8 @@
+import React from "react"
 import Image from "next/image"
 import Link from "next/link"
 
-export default function HomeFooter() {
+const HomeFooter: React.FC = () => {
 	return (
 		<footer className="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -24,3 +25,5 @@ export default function HomeFooter() {
 		</footer>
 	)
 }
+
+export default HomeFooter
